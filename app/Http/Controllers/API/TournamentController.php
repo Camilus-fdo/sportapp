@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Team;
 use App\Tournament;
+use App\Game;
 use Validator;
 
 class TournamentController extends Controller
@@ -27,7 +28,7 @@ class TournamentController extends Controller
 
     			$tournament = Tournament::create($tournament_details);
 
-    			$teams = Team::find([1,2,3]);
+    			$teams = Team::find([1,2,3,4,5]);
     			$tournament->teams()->attach($teams);
     			
     			$response = [
@@ -54,6 +55,39 @@ class TournamentController extends Controller
         if(isset($request->id))
         {
             $teams = $this->getTournamentsTeams($request->id);
+
+            if (count($teams)%2 != 0){
+                array_push($teams,"bye");
+            }
+            
+            $away = array_splice($teams,(count($teams)/2));
+            $home = $teams;
+            
+            for ($i=0; $i < count($home)+count($away)-1; $i++)
+            {
+                for ($j=0; $j<count($home); $j++)
+                {
+                    $rounds[$i][$j]["Home"]=$home[$j];
+                    $rounds[$i][$j]["Away"]=$away[$j];
+                }
+                if(count($home)+count($away)-1 > 2)
+                {
+                    $s = array_splice( $home, 1, 1 );
+                    $slice = array_shift( $s  );
+                    array_unshift($away,$slice );
+                    array_push( $home, array_pop($away ) );
+                }
+            }
+            // var_dump($rounds);
+
+            foreach ($rounds as $key => $games) {
+                for($x =0; $x<=2; $x++ ){
+                    $games[$x]['tournmnt_id'] = $request->id;
+                } 
+                Game::insert($games);   
+            }
+            die();
+            // return $rounds;
 
         }else{
             $response = [
