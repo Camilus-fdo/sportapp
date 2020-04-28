@@ -27,7 +27,7 @@
 				<div class="data-table teams-detial-table">
 					<data-table :data="gridData" :filter-key="searchQuery" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="6">
 						<template slot="more_details" scope="props">
-	    					<button @click="addToTournaments(props.entry.id)" class="btn btn-primary">Add</button>
+	    					<i @click="addToTournaments(props.entry.id)" class="fa fa-plus"></i>
 		    			</template>
 					</data-table>
 	  			</div>
