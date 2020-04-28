@@ -39,7 +39,10 @@ class ScoreController extends Controller
     	foreach ($teams as $key => $team) {
 
     		$team_result = DB::table('scores')
-		                    ->where('team_name', $team)
+		                    ->where([
+                                ['team_name', '=', $team],
+                                ['tournmnt_id', '=', $request->tournmnt_id]
+                            ])
 		                    ->pluck('team_name');
             
             $teams_array[$key]['team'] 		= $team;

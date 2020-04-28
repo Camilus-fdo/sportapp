@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<nav-bar></nav-bar>
 		<h1>Tournament Registration</h1>
 		<div class="row">
 			<div class="col-md-6 form-template">
@@ -19,12 +20,12 @@
 				  				{{e}}
 				  			</li>
 			  			</ul>
-			  	</div>
+			  		</div>
 				</form>
 			</div>
 			<div class="col-md-6">
 				<div class="data-table teams-detial-table">
-					<data-table :data="gridData" :filter-key="searchQuery" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="15">
+					<data-table :data="gridData" :filter-key="searchQuery" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="6">
 						<template slot="more_details" scope="props">
 	    					<i @click="addToTournaments(props.entry.id)" class="fa fa-info-circle fa-lg"></i>
 		    			</template>
@@ -69,6 +70,7 @@
 				checkedTeams 	:[],
 				errors 			: "",
 				teamIds 		: [],
+				errors 			: []
 			}
 		},
 

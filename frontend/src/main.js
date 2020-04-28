@@ -6,9 +6,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import swal from 'sweetalert'
 import DataTable from 'v-data-table';
+import Nav from './components/NavBar.vue';
 
 Vue.use(VueAxios, axios)
 Vue.use(DataTable)
+
+
+Vue.component('nav-bar', Nav)
 
 new Vue({
   el: '#app',

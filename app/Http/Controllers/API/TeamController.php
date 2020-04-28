@@ -16,6 +16,7 @@ class TeamController extends Controller
 
     	$validator = Validator::make($request->all(), [
             'name'		=> 'required',
+            'logo'      => 'required'
         ]);
     	
     	if(!$validator->fails())

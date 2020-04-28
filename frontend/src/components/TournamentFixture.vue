@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<nav-bar></nav-bar>
 		<div class="row">
 			{{tournmnt_name}}
 		</div>
@@ -26,7 +27,7 @@
 	export default{
 		data(){
 			return{
-				tournmnt_id 	: "6",
+				tournmnt_id 	: "",
 				searchQuery 	: "",
 				gridData		: [[]],
 				gridColumns		:[	
@@ -41,6 +42,7 @@
 									'away'			: 'Away',
 									'more_details' 	: 'Action'
 								},
+				tournmnt_name 	: ""
 			}
 		},
 

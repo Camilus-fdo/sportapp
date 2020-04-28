@@ -1,12 +1,9 @@
 <template>
-	<div class="std-reg-form-1">		
-		<div class="container std-reg-form-1">
+	<div class="container">
+		<nav-bar></nav-bar>	
+		<div class="container form-template col-md-6">
 			<h1>Teams Registration</h1>
 			<form>
-				<div class="form-group">
-				    <label for="exampleInputEmail1">ID</label>
-				    <input type="text" class="form-control" id="name" v-model="id">
-			  	</div>
 				<div class="form-group">
 				    <label for="exampleInputEmail1">Name</label>
 				    <input type="text" class="form-control" id="name" v-model="name">
@@ -16,6 +13,13 @@
 				    <input type="file" class="form-control" id="logo" @change="changeImage($event)">
 			  	</div>
 			  	<button type="submit" class="btn btn-primary" v-on:click.prevent="teamRegistration()">Register</button>
+			  	<div class="errors">
+		  			<ul  v-for="error in errors">
+			  			<li  v-for="e in error">
+			  				{{e}}
+			  			</li>
+		  			</ul>
+		  		</div>
 			</form>
 		</div>
 	</div>
@@ -27,6 +31,7 @@
 				id 		: "",
 				name 	: "",
 				logo 	: "",
+				errors 	: "",
 			}
 		},
 
@@ -67,13 +72,13 @@
 							button: "Ok",
 						})
 						.then((status) => {
-		  					// this.$router.push({name:'StdReg1'})
+		  					this.$router.push({name:'CreateTeam'})
 						})
 					}
 					
 				})
 				.catch(error => {
-    				console.log(error.response)
+    				this.errors = error.response.data.errors
 				});
 			}
 		}	

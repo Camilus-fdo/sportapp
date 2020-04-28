@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<nav-bar></nav-bar>
 		<div class="row">	
 			<h1>Score Board</h1>
 		</div>
@@ -160,9 +161,12 @@
 				)
 				.then(function(response){
 					swal({
-						title: "Successfuly Added!",
+						title: "Successfuly Finished!",
 						icon: "success",
 						button: "Ok",
+					})
+					.then((status) => {
+			  			this.$router.push({name:'ListTournament'})
 					})
 					
 				})

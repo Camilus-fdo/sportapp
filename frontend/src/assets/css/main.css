@@ -15,3 +15,8 @@
 .btn-area{
 	margin-top: 20px;
 }
+
+.errors{
+	margin-top: 10px;
+	background-color: #ff6666;
+}

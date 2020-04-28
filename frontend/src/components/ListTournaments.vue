@@ -1,5 +1,6 @@
 <template>
 	<div class="container">
+		<nav-bar></nav-bar>
 		<div class="row">
 			<div class="col-md-12">
 				<div class="data-table teams-detial-table">
@@ -7,6 +8,7 @@
 				<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
 					<template slot="more_details" scope="props">
 						<i @click="viewDetails(props.entry.id,props.entry.name)" class="fa fa-info-circle fa-lg"></i>
+						<i @click="viewLeaderBoard(props.entry.id,props.entry.name)" class="fa fa-info-circle fa-lg"></i>
 	    			</template>
 				</data-table>
 				<!-- <v-for>{{gridData}}</v-for> -->
@@ -65,6 +67,10 @@
 			viewDetails(id, name)
 			{
 				this.$router.push({name:'TournamentFixture', params:{tournmnt_id:id, tournmnt_name:name}})
+			},
+
+			viewLeaderBoard(id, name){
+				this.$router.push({name:'LeaderBoard', params:{tournmnt_id:id, tournmnt_name:name}})
 			}
 		}
 	}

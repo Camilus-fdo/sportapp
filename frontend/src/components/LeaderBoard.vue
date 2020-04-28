@@ -1,5 +1,7 @@
 <template>
 	<div class="container">
+		<nav-bar></nav-bar>
+		<h3>{{tournmnt_name}}</h3>
 		<div class="data-table teams-detial-table">
 			<!-- <datatable :columns="columns" :data="rows"></datatable> -->
 			<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
@@ -15,7 +17,7 @@
 	export default{
 		data(){
 			return{
-				tournmnt_id : "6",
+				tournmnt_id : "",
 				gridData	: [[]],
 				gridColumns	:[	
 								'team',
@@ -25,11 +27,19 @@
 								'team'			: 'Team',
 								'team_wins'		: 'Wins',
 							},
+				tournmnt_name: ""
 			}
 		},
 
 		created(){
-			this.getTeams()
+			this.tournmnt_id 	= this.$route.params.tournmnt_id
+			this.tournmnt_name	= this.$route.params.tournmnt_name
+			if(typeof this.tournmnt_id !== 'undefined'){
+				this.getTeams()
+			}else{
+				this.$router.push({name:'ListTournament'})
+			}
+			
 			// this.getLeaderBoard()
 
 		},

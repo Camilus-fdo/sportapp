@@ -16,6 +16,7 @@ import LeaderBoard from './components/LeaderBoard.vue'
 const router = new VueRouter({
 	mode: 'history',
 	routes: [
+		{path: "/", component: Login, name:'Login'},
 		{path: "/login", component: Login, name:'Login'},
 		{path: "/registration", component: Registration, name:'Registration'},
 		{path: "/create_team", component: CreateTeam, name:'CreateTeam'},
