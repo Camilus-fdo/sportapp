@@ -15,11 +15,13 @@ class TournamentController extends Controller
     {
     	$validator = Validator::make($request->all(), [
             'name'		=> 'required',
+            'logo'      => 'required'
         ]);
 
         if(!$validator->fails())
     	{
-    		$tournament_details = $request->all();
+    	   	$tournament_details = $request->all();
+            $team_names = [];
 
     		$filename = $this->saveLogo($request->logo);
 
@@ -28,16 +30,21 @@ class TournamentController extends Controller
 
     			$tournament = Tournament::create($tournament_details);
 
-    			$teams = Team::find([1,2,3,4,5]);
+    			$teams = Team::find($request->teams);
+                
     			$tournament->teams()->attach($teams);
     			
-    			$response = [
-	    			'success' => true,
-	    			'data'	  => [],
-	    			'message' => 'Create tournament successfully!'
-    			];
-    			
-    			return response()->json($response, 201);
+                $genarte_shedule = $this->sheduleGames($tournament['id']);
+
+                if($genarte_shedule == true){
+                    $response = [
+                        'success' => true,
+                        'data'    => $tournament,
+                        'message' => 'Create tournament successfully!'
+                    ];
+                
+                return response()->json($response, 201);  
+                }
     		}
     	}else{
     		$response = [
@@ -50,11 +57,9 @@ class TournamentController extends Controller
     	}
     }
 
-    public function sheduleGames(Request $request)
+    public function sheduleGames($id)
     {
-        if(isset($request->id))
-        {
-            $teams = $this->getTournamentsTeams($request->id);
+            $teams = $this->getTournamentsTeams($id);
 
             if (count($teams)%2 != 0){
                 array_push($teams,"bye");
@@ -82,22 +87,12 @@ class TournamentController extends Controller
 
             foreach ($rounds as $key => $games) {
                 for($x =0; $x<=2; $x++ ){
-                    $games[$x]['tournmnt_id'] = $request->id;
+                    $games[$x]['tournmnt_id'] = $id;
                 } 
                 Game::insert($games);   
             }
-            die();
-            // return $rounds;
-
-        }else{
-            $response = [
-                'success'   => true,
-                'errors'    => [],
-                'message'   => 'Create tournament fail!'
-            ];
-                
-            return response()->json($response, 404);
-        }
+            
+            return true;
 
     }
 
@@ -117,5 +112,10 @@ class TournamentController extends Controller
             
             return $teams_array;
         }
+    }
+
+    public function listTournaments()
+    {
+        return Tournament::all();
     }
 }

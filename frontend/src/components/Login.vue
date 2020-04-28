@@ -5,7 +5,13 @@
 			    <div v-if="loggingIn" class="container-loading">
 			      Loding...
 			    </div>
-			    <p v-if="errorMessage">{{ loginMessage }}</p>
+			    <div class="errors" v-if="errorMessage">
+			    	<ul v-for="messages in loginMessage">
+			    		<li v-for="message in messages">
+			    			{{ message }}
+			    		</li>
+			    	</ul>
+				</div>
 			    <!-- <p v-if="accessToken">Login successful</p> -->
 			    <form @submit.prevent="loginSubmit">
 					<div class="form-group">

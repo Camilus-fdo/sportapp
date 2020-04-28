@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Team;
-// use App\Tournament;
+use App\Tournament;
 use Validator;
 
 class TeamController extends Controller
@@ -50,5 +50,20 @@ class TeamController extends Controller
     public function getAllTeams()
     {
         return Team::all();
+    }
+
+    public function getTournamentTeams(Request $request)
+    {
+        if(isset($request->tournmnt_id)){
+            $teams_array = [];
+            $tournament = Tournament::find($request->tournmnt_id);
+            $teams = $tournament->teams;
+
+            foreach ($teams as $key => $team) {
+                array_push($teams_array, $team['name']);
+            }
+            
+            return $teams_array;
+        }
     }
 }

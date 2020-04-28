@@ -37,8 +37,8 @@ class UserController extends Controller
             
             $response = [
                 'success' => false,
-                'data'    => 'Validation Error',
-                'message' => $validator->errors()
+                'errors'  => $validator->errors(),
+                'message' => 'Validation Error'
             ];
 
             return response()->json($response, 404);
@@ -72,8 +72,8 @@ class UserController extends Controller
             }else{
     			$response = [
     				'success' => false,
-    				'message' => 'Login fial',
-    				'errors'  =>'Unauthorized'    
+    				'message' => 'Invalid user name or password',
+    				'errors'  =>'Invalid user name or password'    
     			];
     			return response()->json($response, 404);
             }

@@ -22,7 +22,7 @@ export default new Vuex.Store({
 		loginStop: (state, data) => {
 			state.loggingIn = false;
 			//console.log('mu', data);
-			state.loginMessage = data.message;
+			state.loginMessage = data.errors;
 			state.loginSuccessful = data.status;
 			state.errorMessage = !data.status;
 		},
@@ -47,7 +47,7 @@ export default new Vuex.Store({
 				localStorage.setItem('accessToken', response.data.data.token)
 				commit('loginStop', {status: response.data.success, message:response.data.message})
 				commit('updateAccessToken', response.data.data.token)
-				// Router.push('/home');
+				Router.push('/list_tournaments');
 			})
 			.catch(error => {
 				// console.log("asasasas",error.response)

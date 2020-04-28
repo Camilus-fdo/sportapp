@@ -13,6 +13,13 @@
 					    <input type="file" class="form-control" id="logo" @change="changeImage($event)">
 				  	</div>
 				  	<button type="submit" class="btn btn-primary" v-on:click.prevent="tournamentRegistration()">Register</button>
+				  	<div class="errors">
+			  			<ul  v-for="error in errors">
+				  			<li  v-for="e in error">
+				  				{{e}}
+				  			</li>
+			  			</ul>
+			  	</div>
 				</form>
 			</div>
 			<div class="col-md-6">
@@ -38,7 +45,7 @@
 			        		{{value}}
 			        	</td>
 			        	<td>
-			        		<i class="fa fa-info-circle fa-lg" @click="jobDes(index)"></i>
+			        		<i class="fa fa-times fa-lg" @click="removeTeams(index)"></i>
 			         	</td>
 			      	</tr>
 			    </tbody>
@@ -65,6 +72,8 @@
 									'more_details' 	: 'Action'
 								},
 				checkedTeams 	:[],
+				errors 			: "",
+				teamIds 		: [],
 			}
 		},
 
@@ -90,7 +99,8 @@
 				if(this.checkedTeams.length == 5){
 					var data_object = {
 					'name'	: this.name,
-					'logo'	: this.logo
+					'logo'	: this.logo,
+					'teams' : this.teamIds
 					}
 
 					this.axios.post('http://sportapp.com/api/create_tournament',
@@ -105,13 +115,13 @@
 								button: "Ok",
 							})
 							.then((status) => {
-			  					// this.$router.push({name:'StdReg1'})
+			  					this.$router.push({name:'ListTournament'})
 							})
 						}
 						
 					})
 					.catch(error => {
-	    				console.log(error.response)
+	    				this.errors = error.response.data.errors
 					});
 				}else{
 					swal({
@@ -146,7 +156,16 @@
 			addToTournaments(id)
 			{
 				this.checkedTeams.push(this.gridData[id-1])
-				console.log("eeeee",this.checkedTeams)
+				this.teamIds.push(id)
+				// this.gridData.splice(id-1, 1)
+				console.log("sssss",this.teamIds)
+			},
+
+			removeTeams(id)
+			{
+				this.checkedTeams.splice(id,1)
+				this.teamIds.splice(id,1)
+				console.log("sssss",this.teamIds)
 			}
 		}	
 	}

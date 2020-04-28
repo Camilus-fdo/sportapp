@@ -25,3 +25,9 @@ Route::post('create_team', 'API\TeamController@createTeam');
 Route::post('create_tournament', 'API\TournamentController@createTournament');
 Route::post('shedule_games', 'API\TournamentController@sheduleGames');
 Route::get('all_teams', 'API\TeamController@getAllTeams');
+Route::get('all_tournaments', 'API\TournamentController@listTournaments');
+Route::post('get_fixture', 'API\GameController@getFixture');
+Route::post('save_score', 'API\ScoreController@saveScore');
+Route::post('get_leaderboard', 'API\ScoreController@getLeaderBoard');
+Route::post('get_tournmnt_teams', 'API\TeamController@getTournamentTeams');
+
