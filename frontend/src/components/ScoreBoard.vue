@@ -80,6 +80,9 @@
 					this.team1_wins = 1
 					this.byehandling = false
 				}
+
+				console.log("sssssss", this.team1_wins)
+				console.log("sssssss", this.team2_wins)
 			},
 
 			handleBounusPoint()
@@ -158,7 +161,7 @@
 					team1_object,
 					team2_object
 				}
-
+				// console.log("sssssss", socre_object)
 				this.axios.post(window.baseUrl + 'api/save_score',
 					socre_object
 				)
