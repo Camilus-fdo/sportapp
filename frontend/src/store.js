@@ -39,7 +39,7 @@ export default new Vuex.Store({
 	actions:{
 		doLogin({commit}, loginData) {
 			commit('loginStart');
-			Vue.axios.post('http://sportapp.com/api/login',{
+			Vue.axios.post(window.baseUrl + 'api/login',{
 				...loginData
 			})
 			.then(response => {

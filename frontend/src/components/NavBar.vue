@@ -15,6 +15,9 @@
 			  	<a class="nav-item nav-link">
 			  		<router-link to="/create_team">New Team</router-link>
 			  	</a>
+			  	<a class="nav-item nav-link" @click="dologout()">
+			  		Logout
+			  	</a>
 			  	<!-- <a class="nav-item nav-link" href="#">Pricing</a> -->
 			  	<!-- <a class="nav-item nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a> -->
 	    	</div>
@@ -22,7 +25,15 @@
 	</nav>
 </template>
 <script>
-	
+	import {mapState, mapActions} from 'vuex';
+
+	export default{
+		methods:{
+			...mapActions([
+				'dologout'
+			]),
+		}
+	}
 </script>
 <style>
 

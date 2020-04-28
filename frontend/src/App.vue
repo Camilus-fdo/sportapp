@@ -10,8 +10,19 @@ export default {
   name: 'app',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      msg: 'Welcome to Your Vue.js App',
+      baseUrl : ""
     }
+  },
+
+  created(){
+  	this.makeUrl()
+  },
+
+  methods:{
+  	makeUrl(){
+  		window.baseUrl = 'http://sportapp.com/'
+  	}
   }
 }
 </script>

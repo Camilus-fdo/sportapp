@@ -4,17 +4,12 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="data-table teams-detial-table">
-				<!-- <datatable :columns="columns" :data="rows"></datatable> -->
-				<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
-					<template slot="more_details" scope="props">
-						<i @click="viewDetails(props.entry.id,props.entry.name)" class="fa fa-info-circle fa-lg"></i>
-						<i @click="viewLeaderBoard(props.entry.id,props.entry.name)" class="fa fa-info-circle fa-lg"></i>
-	    			</template>
-				</data-table>
-				<!-- <v-for>{{gridData}}</v-for> -->
-				<!-- <vue-bootstrap4-table :rows="rows" :columns="columns" :config="config" :actions="actions"
-	                                @on-download="onDownload">
-	        	</vue-bootstrap4-table> -->
+					<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
+						<template slot="more_details" scope="props">
+							<button @click="viewDetails(props.entry.id,props.entry.name)" class="btn btn-primary">Fixture</button>
+							<button @click="viewLeaderBoard(props.entry.id,props.entry.name)" class="btn btn-primary">LeaderBoard</button>
+		    			</template>
+					</data-table>
 	  			</div>
 			</div>
 		</div>
@@ -47,7 +42,7 @@
 			getTournaments()
 			{
 				var _t = this
-				this.axios.get('http://sportapp.com/api/all_tournaments')
+				this.axios.get(window.baseUrl + 'api/all_tournaments')
 				.then(function(response){
 					_t.setTableData(response)
 					

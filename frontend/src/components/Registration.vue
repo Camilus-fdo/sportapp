@@ -57,7 +57,7 @@
 					'c_password': this.c_password
 				}
 
-				this.axios.post('http://sportapp.com/api/register',
+				this.axios.post(window.baseUrl + 'api/register',
 					data_object
 				)
 				.then(response=> {

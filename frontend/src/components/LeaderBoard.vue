@@ -2,14 +2,12 @@
 	<div class="container">
 		<nav-bar></nav-bar>
 		<h3>{{tournmnt_name}}</h3>
-		<div class="data-table teams-detial-table">
-			<!-- <datatable :columns="columns" :data="rows"></datatable> -->
-			<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
-			</data-table>
-			<!-- <v-for>{{gridData}}</v-for> -->
-			<!-- <vue-bootstrap4-table :rows="rows" :columns="columns" :config="config" :actions="actions"
-                                @on-download="onDownload">
-        	</vue-bootstrap4-table> -->
+		<div class="col-md-6">
+			<div class="data-table teams-detial-table">
+				<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
+				</data-table>
+				
+			</div>
 		</div>
 	</div>
 </template>
@@ -53,7 +51,7 @@
 					teams 		: teams_array
 				}
 
-				this.axios.post('http://sportapp.com/api/get_leaderboard',
+				this.axios.post(window.baseUrl + 'api/get_leaderboard',
 					req_object
 				)
 				.then(function(response){

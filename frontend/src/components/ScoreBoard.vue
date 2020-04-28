@@ -9,11 +9,11 @@
 				<div class="team-name">
 					<b>{{team1_name}}</b>
 				</div>
-				<div class="form-group">
+				<div v-if="byehandling" class="form-group">
 					<label>Tries</label></br>
 						<input type="number" class="scoure-counter" id="point1" name="points" step="1" v-model="point1" @click="handleBounusPoint()">
 				</div>
-				<div class="form-group">
+				<div class="form-group" v-if="byehandling">
 					<label>Coversions</label></br>
 						<input type="number" class="scoure-counter" id="con1" name="points" step="1" v-model="conversion1">
 				</div>		
@@ -22,11 +22,11 @@
 				<div class="team-name">
 					<b>{{team2_name}}</b>
 				</div>
-				<div class="form-group">
+				<div class="form-group" v-if="byehandling">
 					<label>Tries</label></br>
 					<input type="number" class="scoure-counter" id="point2" name="points" step="1" v-model="point2" @click="handleBounusPoint()">
 				</div>
-				<div class="form-group">
+				<div class="form-group" v-if="byehandling">
 					<label>Coversions</label></br>	
 					<input type="number" class="scoure-counter" id="con1" name="points" step="1" v-model="conversion2">
 				</div>	
@@ -57,6 +57,7 @@
 				game_id 			: "",
 				team1_wins 			: 0,
 				team2_wins 			: 0,
+				byehandling 		: true
 			}
 		},
 		
@@ -74,8 +75,10 @@
 			byeshandler(){
 				if(this.team1_name == 'bye'){
 					this.team2_wins = 1
+					this.byehandling = false
 				}else if(this.team2_name == 'bye'){
 					this.team1_wins = 1
+					this.byehandling = false
 				}
 			},
 
@@ -156,7 +159,7 @@
 					team2_object
 				}
 
-				this.axios.post('http://sportapp.com/api/save_score',
+				this.axios.post(window.baseUrl + 'api/save_score',
 					socre_object
 				)
 				.then(function(response){

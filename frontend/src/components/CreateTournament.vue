@@ -100,7 +100,7 @@
 					'teams' : this.teamIds
 					}
 
-					this.axios.post('http://sportapp.com/api/create_tournament',
+					this.axios.post(window.baseUrl + 'api/create_tournament',
 						data_object
 					)
 					.then(response=> {

@@ -41,7 +41,8 @@ class ScoreController extends Controller
     		$team_result = DB::table('scores')
 		                    ->where([
                                 ['team_name', '=', $team],
-                                ['tournmnt_id', '=', $request->tournmnt_id]
+                                ['tournmnt_id', '=', $request->tournmnt_id],
+                                ['wins', '=', 1]
                             ])
 		                    ->pluck('team_name');
             

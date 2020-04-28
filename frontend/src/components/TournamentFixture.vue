@@ -10,7 +10,7 @@
 				<!-- <datatable :columns="columns" :data="rows"></datatable> -->
 				<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
 					<template slot="more_details" scope="props">
-						<i v-if="props.entry.status == 0" @click="viewDetails(props.entry.id, props.entry.home, props.entry.away)" class="fa fa-info-circle fa-lg"></i>
+						<button v-if="props.entry.status == 0" @click="viewDetails(props.entry.id, props.entry.home, props.entry.away)" class="btn btn-primary">Add Score</button>
 						<i v-if="props.entry.status == 1">Game Ended</i>
 	    			</template>
 				</data-table>
@@ -64,7 +64,7 @@
 				var data_object = {
 					'id'	: this.tournmnt_id,
 					}
-				this.axios.post('http://sportapp.com/api/get_fixture',
+				this.axios.post(window.baseUrl + 'api/get_fixture',
 					data_object
 				)
 				.then(function(response){

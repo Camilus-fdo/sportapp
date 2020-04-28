@@ -29,4 +29,56 @@ const router = new VueRouter({
 
 });
 
+router.beforeEach((to, from, next) => {
+	
+	store.dispatch('fetchAccessToken');
+	if (to.fullPath === '/list_tournaments') {
+		if (!store.state.accessToken) {
+	  		next('/');
+		}
+	}
+
+	if (to.fullPath === '/create_team') {
+		if (!store.state.accessToken) {
+	  		next('/');
+		}
+	}
+
+	if (to.fullPath === '/create_tournament') {
+		if (!store.state.accessToken) {
+	  		next('/');
+		}
+	}
+
+	if (to.fullPath === '/list_tournaments') {
+		if (!store.state.accessToken) {
+	  		next('/');
+		}
+	}
+
+	if (to.fullPath === '/tournament_fixture') {
+		if (!store.state.accessToken) {
+	  		next('/');
+		}
+	}
+
+	if (to.fullPath === '/score_board') {
+		if (!store.state.accessToken) {
+	  		next('/');
+		}
+	}
+	if (to.fullPath === '/leader_board') {
+		if (!store.state.accessToken) {
+	  		next('/');
+		}
+	}
+
+  if (to.fullPath === '/' || to.fullPath === '/login') {
+    if (store.state.accessToken) {
+      next('/list_tournaments');
+    }
+  }
+  next();
+});
+
 export default router;

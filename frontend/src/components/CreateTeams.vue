@@ -60,7 +60,7 @@
 					'logo'	: this.logo
 				}
 
-				this.axios.post('http://sportapp.com/api/create_team',
+				this.axios.post(window.baseUrl + '/api/create_team',
 					data_object
 				)
 				.then(response=> {
