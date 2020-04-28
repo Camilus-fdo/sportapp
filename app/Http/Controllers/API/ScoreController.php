@@ -11,8 +11,22 @@ class ScoreController extends Controller
 {
     public function saveScore(Request $request)
     {
-    		$scores = $request->all();
+    		    
+            $scores = $request->all();
     		Score::insert($scores);
+
+            $status = DB::table('games')
+            ->where('id', $request->team1_object['game_id'])
+            ->update(['status' => 1]);
+
+            if($status == 1){
+                $response = [
+                    'success' => true,
+                ];
+                
+                return response()->json($response, 200); 
+            }
+            
     }
 
     public function getLeaderBoard(Request $request)

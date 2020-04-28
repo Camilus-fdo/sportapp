@@ -9,7 +9,8 @@
 				<!-- <datatable :columns="columns" :data="rows"></datatable> -->
 				<data-table :data="gridData" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="10">
 					<template slot="more_details" scope="props">
-						<i @click="viewDetails(props.entry.id, props.entry.home, props.entry.away)" class="fa fa-info-circle fa-lg"></i>
+						<i v-if="props.entry.status == 0" @click="viewDetails(props.entry.id, props.entry.home, props.entry.away)" class="fa fa-info-circle fa-lg"></i>
+						<i v-if="props.entry.status == 1">Game Ended</i>
 	    			</template>
 				</data-table>
 				<!-- <v-for>{{gridData}}</v-for> -->

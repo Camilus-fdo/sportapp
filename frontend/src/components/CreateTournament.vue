@@ -24,16 +24,11 @@
 			</div>
 			<div class="col-md-6">
 				<div class="data-table teams-detial-table">
-				<!-- <datatable :columns="columns" :data="rows"></datatable> -->
-				<data-table :data="gridData" :filter-key="searchQuery" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="15">
-					<template slot="more_details" scope="props">
-    					<i @click="addToTournaments(props.entry.id)" class="fa fa-info-circle fa-lg"></i>
-	    			</template>
-				</data-table>
-				<!-- <v-for>{{gridData}}</v-for> -->
-				<!-- <vue-bootstrap4-table :rows="rows" :columns="columns" :config="config" :actions="actions"
-	                                @on-download="onDownload">
-	        	</vue-bootstrap4-table> -->
+					<data-table :data="gridData" :filter-key="searchQuery" :columns-to-display="gridColumns" :display-names="displayNames" :items-per-page="15">
+						<template slot="more_details" scope="props">
+	    					<i @click="addToTournaments(props.entry.id)" class="fa fa-info-circle fa-lg"></i>
+		    			</template>
+					</data-table>
 	  			</div>
 			</div>
 		</div>
@@ -165,7 +160,6 @@
 			{
 				this.checkedTeams.splice(id,1)
 				this.teamIds.splice(id,1)
-				console.log("sssss",this.teamIds)
 			}
 		}	
 	}

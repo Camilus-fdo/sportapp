@@ -1,27 +1,40 @@
 <template>
 	<div class="container">
-		<div class="row">
-			
+		<div class="row">	
+			<h1>Score Board</h1>
 		</div>
 		<div class="row">
-			<div class="col-md-6">
+			<div class="col-md-6 form-template">
 				<div class="team-name">
-					{{team1_name}}
+					<b>{{team1_name}}</b>
 				</div>
-				<input type="number" class="scoure-counter" id="point1" name="points" step="1" v-model="point1" @click="handleBounusPoint()">
-				<input type="number" class="scoure-counter" id="con1" name="points" step="1" v-model="conversion1">
+				<div class="form-group">
+					<label>Tries</label></br>
+						<input type="number" class="scoure-counter" id="point1" name="points" step="1" v-model="point1" @click="handleBounusPoint()">
+				</div>
+				<div class="form-group">
+					<label>Coversions</label></br>
+						<input type="number" class="scoure-counter" id="con1" name="points" step="1" v-model="conversion1">
+				</div>		
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-6 form-template">
 				<div class="team-name">
-					{{team2_name}}
+					<b>{{team2_name}}</b>
 				</div>
-				<input type="number" class="scoure-counter" id="point2" name="points" step="1" v-model="point2" @click="handleBounusPoint()">
-				<input type="number" class="scoure-counter" id="con1" name="points" step="1" v-model="conversion2">
+				<div class="form-group">
+					<label>Tries</label></br>
+					<input type="number" class="scoure-counter" id="point2" name="points" step="1" v-model="point2" @click="handleBounusPoint()">
+				</div>
+				<div class="form-group">
+					<label>Coversions</label></br>	
+					<input type="number" class="scoure-counter" id="con1" name="points" step="1" v-model="conversion2">
+				</div>	
 			</div>
-			{{point1}} vs {{point2}}
 		</div>
 		<div class="row">
-			<button @click="calculateTotalPoint()">Done</button>
+			<div class="btn-area">
+				<button class="btn btn-primary justify-content-center" @click="calculateTotalPoint()">Finsh Game</button>
+			</div>
 		</div>
 	</div>
 </template>
@@ -29,18 +42,20 @@
 	export default{
 		data(){
 			return{
-				point1 				: "",
-				point2 				: "",
-				conversion2			: "",
-				conversion1			: "",
-				bounus_point_team1	: "",
-				bounus_point_team2	: "",
-				total_point1		: "",
-				total_point2		: "",
+				point1 				: 0,
+				point2 				: 0,
+				conversion2			: 0,
+				conversion1			: 0,
+				bounus_point_team1	: 0,
+				bounus_point_team2	: 0,
+				total_point1		: 0,
+				total_point2		: 0,
 				tournament_id 		: "",
-				team1_name 			: "Argentina",
-				team2_name 			: "Brazil",
-				game_id 			: "1"
+				team1_name 			: "",
+				team2_name 			: "",
+				game_id 			: "",
+				team1_wins 			: 0,
+				team2_wins 			: 0,
 			}
 		},
 		
@@ -49,9 +64,20 @@
 			this.game_id		= this.$route.params.game_id
 			this.team1_name		= this.$route.params.team1
 			this.team2_name		= this.$route.params.team2
+
+			this.byeshandler();
+			
 		},
 
 		methods:{
+			byeshandler(){
+				if(this.team1_name == 'bye'){
+					this.team2_wins = 1
+				}else if(this.team2_name == 'bye'){
+					this.team1_wins = 1
+				}
+			},
+
 			handleBounusPoint()
 			{
 				
@@ -65,14 +91,40 @@
 					this.bounus_point_team1 = 0
 					this.bounus_point_team2 = 0
 				}
-				console.log("test1", this.bounus_point_team1)
-				console.log("test2", this.bounus_point_team2)
+				// console.log("test1", this.bounus_point_team1)
+				// console.log("test2", this.bounus_point_team2)
 			},
 
 			calculateTotalPoint()
 			{
 				this.total_point1 = this.point1 *5 + this.conversion1 * 3
 				this.total_point2 = this.point2 *5 + this.conversion2 * 3
+
+				if(this.total_point1 > this.total_point2){
+					this.team1_wins = 1
+					this.team2_wins = 0 
+				}else if(this.total_point1 < this.total_point2){
+					this.team1_wins = 0
+					this.team2_wins = 1 
+				}else if(this.total_point1 == this.total_point2){
+					if(this.bounus_point_team1 > this.bounus_point_team2){
+						this.team1_wins = 1
+						this.team2_wins = 0
+					}else if(this.bounus_point_team1 < this.bounus_point_team2){
+						this.team1_wins = 0
+						this.team2_wins = 1
+					}else if(this.bounus_point_team1 == this.bounus_point_team2){
+						if(this.point1 > this.point2){
+							this.team1_wins = 1
+							this.team2_wins = 0
+						}else if(this.point1 < this.point2){
+							this.team1_wins = 0
+							this.team2_wins = 1
+						}else if(this.point1 == this.point2){
+							this.randomWin()
+						}
+					}
+				}
 
 				var team1_object = {
 					'tournmnt_id'	: this.tournament_id,
@@ -81,7 +133,8 @@
 					'tries'			: this.point1,
 					'conversions'	: this.conversion1,
 					'bonus_point'	: this.bounus_point_team1,
-					'total_point'	: this.total_point1
+					'total_point'	: this.total_point1,
+					'wins'			: this.team1_wins
 				}
 
 				var team2_object = {
@@ -91,14 +144,16 @@
 					'tries'			: this.point2,
 					'conversions'	: this.conversion2,
 					'bonus_point'	: this.bounus_point_team2,
-					'total_point'	: this.total_point2
+					'total_point'	: this.total_point2,
+					'wins'			: this.team2_wins
 				}
+
+				
 
 				var socre_object = {
 					team1_object,
 					team2_object
 				}
-				console.log("test1", socre_object)
 
 				this.axios.post('http://sportapp.com/api/save_score',
 					socre_object
@@ -116,6 +171,19 @@
 	  			})
 				// console.log("test2", this.total_point2)
 			},
+
+			randomWin(){
+				var random = Math.round(Math.random())
+				var team1 = random
+				
+				if(team1 == 1){
+					this.team1_wins = 1
+					this.team2_wins = 0
+				}else{
+					this.team1_wins = 0
+					this.team2_wins = 1
+				}
+			},
 		}
 	}
 </script>
@@ -124,6 +192,6 @@
 		height: 70px;
 	}
 	team-name{
-		font: 70px;
+		font-size: 100px;
 	}
 </style>
